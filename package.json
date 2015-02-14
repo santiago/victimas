@@ -1,0 +1,21 @@
+{
+  "name": "victimas",
+  "description": "Sistema de Información para Análisis y Visualización de Datos sobre Conflicto Armado en Colombia",
+  "version": "0.0.1",
+  "homepage": "http://unloquer.org",
+  "author": "Un/loquer",
+  "repository": "",
+  "engines": {
+    "node": ">= 0.12"
+  },
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "stylus": "*",
+    "socket.io": "*",
+    "mongoose": "*",
+    "dustjs-linkedin": "*",
+    "lodash": "*",
+    "redis": "*"
+  }
+}
