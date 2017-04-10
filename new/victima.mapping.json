@@ -1,0 +1,32 @@
+{
+  "victima" : {
+    "properties" : {
+      "nombre": {
+        "type": "string"
+      },
+      "nacimiento": {
+        "type": "string",
+        "analyzer": "keyword"
+      },
+      "fecha" : {
+        "type": "date",
+        "format": "dateOptionalTime"
+      },
+      "tipificacion": {
+        "type": "string",
+        "analyzer": "keyword"
+      },
+      "responsable" : {
+        "type": "string",
+        "analyzer": "keyword"
+      },
+      "ubicacion" : {
+        "type": "string",
+        "analyzer": "keyword"
+      },
+      "location" : {
+        "type": "geo_point"
+      }
+    }
+  }
+}
