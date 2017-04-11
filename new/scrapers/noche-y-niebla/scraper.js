@@ -6,7 +6,7 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 
 const elasticsearch = require('elasticsearch');
-const INDEX = 'victimas2';
+const INDEX = 'victimas';
 const es = new elasticsearch.Client({
   host: '173.230.141.159:9200',
   // log: 'trace'
@@ -112,11 +112,35 @@ function parseVictimas(r) {
   var [_victimas, _total] = r.victimas.split('|').map(i => i.trim());
   const total = parseInt(_total.split(':').pop().trim());
 
+  // Here's a sample of the victim's name string.
+  // It can contain one or more tipificaciones,
+  // as well as a birth year in parenthesis.
+  // FULANITO DETAL Y PASCUAL (1978) B41, D703
   var victimas = _victimas.split(',')
-                      .map(i => i.trim().split(' '))
+                      // On the split this record would turn into
+                      // ['FULANITO DETAL Y PASCUAL (1978) B41', 'D703']
+                      .map((v) => v.trim().split(' '))
+                      // In case there were more than one `tipificacion`
+                      // like shown in the sample victima above,
+                      // we add them appropriately to each record.
+                      .filter((v,i,a) => {
+                        if(!v || !v.length) return;
 
+                        // If `v` only has a single element it's most likely
+                        // it is a `tipificacion` from the previous element.
+                        // In this case we concat the `tipificacion` to the
+                        // last element of the previous element.
+                        // We filter such that single-element elements are
+                        // discarded.
+                        if(v.length == 1 && v[0].match(/^[A-Z]\d+$/)) {
+                          const l = a[i-1].length;
+                          a[i-1][l-1] += `,${v[0]}`;
+                          return;
+                        }
+                        return v;
+                      });
 
-  const tipificaciones = victimas.map(v => v.pop());
+  const tipificaciones = victimas.map(v => _.uniq(v.pop().split(',')));
 
   // For some victims they include
   // they birth year

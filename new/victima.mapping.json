@@ -13,16 +13,28 @@
         "format": "dateOptionalTime"
       },
       "tipificacion": {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       },
       "responsable" : {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       },
       "ubicacion" : {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       },
       "location" : {
         "type": "geo_point"
