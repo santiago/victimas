@@ -9,16 +9,28 @@
         "format": "dateOptionalTime"
       },
       "responsable": {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       },
       "tipificacion": {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       },
       "ubicacion": {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       },
       "victimas": {
         "type": "string",
@@ -28,8 +40,12 @@
         "type": "geo_point"
       },
       "DIVIPOLA": {
-        "type": "string",
-        "analyzer": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       }
     }
   }

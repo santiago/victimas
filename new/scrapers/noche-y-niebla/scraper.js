@@ -128,7 +128,8 @@ function parseVictimas(r) {
       year || v.push(pop);
       return year;
     } catch(e) {
-      console.log('->>', pop);
+      console.log('->>');
+      console.log(v);
     }
   });
 
@@ -173,7 +174,7 @@ function processResponse(res) {
     victimas = victimas.concat(victimasReporte);
   });
 
-  // reportes.length && saveRecords({ caso: reportes });
+  reportes.length && saveRecords({ caso: reportes });
 
   // Remove NNs from victimas before updating ES
   victimas = victimas.filter(i => i.nombre != 'N N');
