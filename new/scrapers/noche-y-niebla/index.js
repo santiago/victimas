@@ -1,8 +1,8 @@
 const scraper = require('./scraper');
 
 const opts = {
-  departamento: null,//'5',
-  clasificacion: null//'B:1:41'
+  departamento: '5',
+  clasificacion: 'D:2:86'
 };
 
 scraper(opts);

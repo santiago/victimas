@@ -124,7 +124,12 @@ function parseVictimas(r) {
                       // like shown in the sample victima above,
                       // we add them appropriately to each record.
                       .filter((v,i,a) => {
-                        if(!v || !v.length) return;
+                        // If the victima record is empty discard it
+                        if(!v || !v.length || !v[0]) return;
+
+                        // If victima is NN we discard from here
+                        if(v.slice(0,2).join('') == 'NN') return;
+
 
                         // If `v` only has a single element it's most likely
                         // it is a `tipificacion` from the previous element.
@@ -139,6 +144,14 @@ function parseVictimas(r) {
                         }
                         return v;
                       });
+
+  if(!victimas.length) { return [] }
+
+  // console.log('\n-->>');
+  // console.log(total);
+  // console.log(r);
+  // console.log(_victimas);
+  // console.log(victimas);
 
   const tipificaciones = victimas.map(v => _.uniq(v.pop().split(',')));
 
@@ -199,10 +212,9 @@ function processResponse(res) {
   });
 
   reportes.length && saveRecords({ caso: reportes });
-
-  // Remove NNs from victimas before updating ES
-  victimas = victimas.filter(i => i.nombre != 'N N');
   victimas.length && saveRecords({ victima: victimas });
+
+  // process.exit();
 
   return { reportes: reportes, victimas: victimas };
 }
