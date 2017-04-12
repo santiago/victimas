@@ -73,6 +73,22 @@ function extractDataByDepartamento(queryOptions, departamento, i, l, cb) {
     query['concoordenadas'] = '1';
     query['_qf_consultaWeb_consulta'] = 'Consulta';
 
+    query = {
+      'evita_csrf': 'zqdHayPZ3CZ6+tMXsDwdnQ==',
+      '_qf_default': 'consultaWeb:consulta',
+      'id_departamento': departamento, // '91'
+      'clasificacion[]': clasificacion, //'A:1:13',
+      'ordenar': 'fecha',
+      'mostrar': 'tabla',
+      'caso_memo': '1',
+      'caso_fecha': '1',
+      'm_ubicacion': '1',
+      'm_victimas': '1',
+      'm_presponsables': '1',
+      'm_tipificacion': '1',
+      '_qf_consultaWeb_consulta': 'Consulta'
+    }
+
     console.log(`Consultando depto: ${departamento} - tipif: ${clasificacion}`);
 
     unirest.post("https://www.nocheyniebla.org/consulta_web.php")
@@ -95,6 +111,7 @@ function extractDataByDepartamento(queryOptions, departamento, i, l, cb) {
 function parseReporte(data) {
   const [descripcion, fecha, ubicacion, victimas, responsable, tipificacion] = data;
   return {
+    'id': genId(victimas + ubicacion),
     'descripcion': descripcion,
     'fecha': fecha,
     'ubicacion': (() => {
@@ -146,12 +163,6 @@ function parseVictimas(r) {
                       });
 
   if(!victimas.length) { return [] }
-
-  // console.log('\n-->>');
-  // console.log(total);
-  // console.log(r);
-  // console.log(_victimas);
-  // console.log(victimas);
 
   const tipificaciones = victimas.map(v => _.uniq(v.pop().split(',')));
 
@@ -213,8 +224,6 @@ function processResponse(res) {
 
   reportes.length && saveRecords({ caso: reportes });
   victimas.length && saveRecords({ victima: victimas });
-
-  // process.exit();
 
   return { reportes: reportes, victimas: victimas };
 }
