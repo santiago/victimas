@@ -1,0 +1,44 @@
+{
+  "victima" : {
+    "properties" : {
+      "nombre": {
+        "type": "string"
+      },
+      "nacimiento": {
+        "type": "string",
+        "analyzer": "keyword"
+      },
+      "fecha" : {
+        "type": "date",
+        "format": "dateOptionalTime"
+      },
+      "tipificacion": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "responsable" : {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "ubicacion" : {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "location" : {
+        "type": "geo_point"
+      }
+    }
+  }
+}
